@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :authenticate_user, only: %i[index, current]  
+      before_action :authenticate_user, only: %i[index current]
 
       def index
         render json: { status: 200, msg: 'User logged in'}
