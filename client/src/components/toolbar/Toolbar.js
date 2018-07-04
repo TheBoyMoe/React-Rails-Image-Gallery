@@ -16,10 +16,10 @@ const toolbar = () => {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem link="/">Home</NavItem>
-            <NavItem>Gallery</NavItem>
-            <NavItem link="/login">Login</NavItem>
-            <NavItem>Logout</NavItem>
+            <NavItem link="/" exact>Home</NavItem>
+            <NavItem link="#">Gallery</NavItem>
+            <NavItem link="/login" exact>Login</NavItem>
+            <NavItem link="#">Logout</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
