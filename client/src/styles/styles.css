@@ -7,7 +7,7 @@
  @import './components/NavItem.css';
  @import './components/Logo.css';
 
- .App-intro {
+ .App {
    margin-top: 96px;
    text-align: center;
  }

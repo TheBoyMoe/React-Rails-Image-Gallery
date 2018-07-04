@@ -2,7 +2,7 @@ import React from 'react';
 
 const signup = (props) => {
   return (
-    <div>
+    <div className="App">
       <h1>Signup page</h1>
       <p>Already registered? <strong><a href="/login">Login</a></strong></p>
     </div>
