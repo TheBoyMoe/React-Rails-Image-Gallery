@@ -1,5 +1,13 @@
  /* base styles */
- @import './base/normalize.css';
- @import './base/base.css';
+ /* @import './base/normalize.css';
+ @import './base/base.css'; */
 
  /* component styles */
+ @import './components/Toolbar.css';
+ @import './components/NavItem.css';
+ @import './components/Logo.css';
+
+ .App-intro {
+   margin-top: 96px;
+   text-align: center;
+ }
