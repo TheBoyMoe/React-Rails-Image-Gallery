@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import checkInputValidity from '../../utilities/CheckValidity';
 
 class Signup extends React.Component {
   state = {
@@ -10,7 +11,7 @@ class Signup extends React.Component {
         minLength: 3
       },
       valid: false,
-      touched: false
+      // touched: false
     },
     email: {
       value: '',
@@ -19,7 +20,7 @@ class Signup extends React.Component {
         isEmail: true
       },
       valid: false,
-      touched: false
+      // touched: false
     },
     password: {
       value: '',
@@ -29,7 +30,7 @@ class Signup extends React.Component {
         maxLength: 72
       },
       valid: false,
-      touched: false
+      // touched: false
     },
     password_confirmation: {
       value: '',
@@ -40,7 +41,7 @@ class Signup extends React.Component {
         match: true
       },
       valid: false,
-      touched: false
+      // touched: false
     },
     formIsValid: false
   }
@@ -48,10 +49,29 @@ class Signup extends React.Component {
   onSubmitHandler = (e) => {
     e.preventDefault();
     // TODO - pass data to api
+    console.log('Submit', this.state);
   };
 
   onChangeHandler = (e, name) => {
+    // update state
+    const value = e.target.value;
+    const clone = { ...this.state };
+    // clone[name].touched = true;
+    clone[name].valid = checkInputValidity(value, clone[name].validation);
+    clone[name].value = value;
 
+    let isValid = true;
+    for(let prop in clone){
+      if(prop === 'name' || prop === 'email' || prop === 'password' || prop === 'password_confirmation'){
+        isValid = clone[prop].valid && isValid;
+      }
+    }
+    if(clone.password.value !== clone.password_confirmation.value)
+      clone.password_confirmation.valid = false;
+
+    isValid = clone.password.value === clone.password_confirmation.value && isValid;
+    clone.formIsValid = isValid;
+    this.setState({ ...clone })
   };
 
   render(){
