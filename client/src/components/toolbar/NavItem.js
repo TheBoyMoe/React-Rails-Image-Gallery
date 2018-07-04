@@ -3,7 +3,7 @@ import React from 'react';
 const navItem = (props) => {
   return (
     <li className="NavItem">
-      <a href="#">{props.children}</a>
+      <a href={ props.link }>{ props.children }</a>
     </li>
   );
 };
