@@ -6,6 +6,7 @@ import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import Logout from '../auth/Logout';
 import Gallery from '../pages/Gallery';
+import NotFound from '../pages/NotFound';
 import Toolbar from '../toolbar/Toolbar';
 import { isAuthenticated } from '../../utilities/auth-helpers';
 
@@ -16,6 +17,7 @@ const appRouter = () => {
       <Route path="/gallery" component={ Gallery } />
       <Route path="/login" component={ Login } />
       <Route path="/signup" component={ Signup } />
+      <Route component={ NotFound } />
     </Switch>
   );
   if(isAuthenticated()){
@@ -24,6 +26,7 @@ const appRouter = () => {
         <Route path="/" component={ Home } exact />
         <Route path="/gallery" component={ Gallery } />
         <Route path="/logout" component={ Logout } />
+        <Route component={ NotFound } />
       </Switch>
     );
   }
