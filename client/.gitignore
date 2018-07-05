@@ -4,7 +4,7 @@
 /node_modules
 
 # testing
-/coverage
+/src/tests/components/__snapshots__
 
 # production
 /build
