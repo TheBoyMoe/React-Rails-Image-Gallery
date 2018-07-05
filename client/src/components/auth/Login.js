@@ -26,7 +26,7 @@ class Login extends React.Component {
     formIsValid: false,
     error: ''
   }
-  
+
   onChangeHandler = (e, name) => {
     const value = e.target.value;
     const clone = {
@@ -60,7 +60,11 @@ class Login extends React.Component {
       }
     })
     .then(jwt => {
-      if(jwt) saveToken(jwt);
+      if(jwt) {
+        // login user and redirect 
+        saveToken(jwt);
+        this.props.history.push('/gallery');
+      }
       console.log('isAuthenticated', !!isAuthenticated());
     })
     .catch(err => console.log('Signin error', err));

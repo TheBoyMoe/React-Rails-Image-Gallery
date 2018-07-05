@@ -70,7 +70,10 @@ class Signup extends React.Component {
               }
             })
             .then(jwt => {
-              if(jwt) saveToken(jwt);
+              if(jwt) {
+                saveToken(jwt);
+                this.props.history.push('/gallery');  
+              } 
               console.log('isAuthenticated', !!isAuthenticated());
             });
           } else {
