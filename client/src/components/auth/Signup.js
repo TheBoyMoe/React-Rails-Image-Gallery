@@ -66,8 +66,7 @@ class Signup extends React.Component {
               if(response.ok && response.status === 201){
                 return response.json();
               } else {
-                console.log(response)
-                this.setState({ error: response.statusText} );
+                this.setState({ error: response.statusText });
               }
             })
             .then(jwt => {

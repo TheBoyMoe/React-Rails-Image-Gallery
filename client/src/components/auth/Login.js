@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import checkInputValidity from '../../utilities/CheckValidity';
+import { signin } from '../../utilities/api-helpers';
+import { isAuthenticated, saveToken, removeToken } from '../../utilities/auth-helpers';
 
 class Login extends React.Component {
   state = {
@@ -46,7 +48,22 @@ class Login extends React.Component {
   
   onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log('Submit form');
+    removeToken(); // remove any previously saved token
+    signin({
+      "auth": { "email": this.state.email.value, "password": this.state.password.value }
+    })
+    .then(response => {
+      if(response.ok && response.status === 201){
+        return response.json();
+      } else {
+        this.setState({ error: 'User not found or password is invalid' });
+      }
+    })
+    .then(jwt => {
+      if(jwt) saveToken(jwt);
+      console.log('isAuthenticated', !!isAuthenticated());
+    })
+    .catch(err => console.log('Signin error', err));
   }
 
   dismissErrorHandler = () => {
