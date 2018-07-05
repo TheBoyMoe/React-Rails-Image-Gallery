@@ -112,10 +112,24 @@ class Signup extends React.Component {
   };
 
   render(){
+    let errorMessage = null;
+    if(this.state.error) {
+      errorMessage = (
+        <div className="alert alert-danger" role="alert">
+          <button type="button" className="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>{ this.state.error }</strong>
+        </div>
+      );
+    }
+
     return (
       <div className="App Form">
+        { errorMessage }
+
         <h1 className="center">Signup page</h1>
-  
+        
         <form onSubmit={ this.onSubmitHandler }>
           <div className="Input">
             <label className="Label">Name</label>
