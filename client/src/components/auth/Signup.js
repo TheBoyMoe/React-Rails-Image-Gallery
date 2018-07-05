@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import checkInputValidity from '../../utilities/CheckValidity';
+import { register } from '../../utilities/api-helpers';
 
 class Signup extends React.Component {
   state = {
@@ -43,13 +44,33 @@ class Signup extends React.Component {
       valid: false,
       // touched: false
     },
-    formIsValid: false
+    formIsValid: false,
+    error: ''
   }
 
   onSubmitHandler = (e) => {
     e.preventDefault();
-    // TODO - pass data to api
-    console.log('Submit', this.state);
+    const user = {
+      "name": this.state.name.value,
+      "email": this.state.email.value,
+      "password": this.state.password.value,
+      "password_confirmation": this.state.password_confirmation.value
+    }
+    // register user
+    register({"user": user})
+      .then(res => {
+        if(res && res.ok){
+          if(res.status === 200){
+            this.setState({ error: ''});
+            console.log("User registered successfully")
+          } else {
+            this.setState({ error: 'User already registered' });
+            console.log('User already registered');
+          }
+        } else {
+          this.setState({ error: res.statusText })
+        }  
+      })
   };
 
   onChangeHandler = (e, name) => {
