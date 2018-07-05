@@ -12,8 +12,7 @@ class Signup extends React.Component {
         required: true,
         minLength: 3
       },
-      valid: false,
-      // touched: false
+      valid: false
     },
     email: {
       value: '',
@@ -21,8 +20,7 @@ class Signup extends React.Component {
         required: true,
         isEmail: true
       },
-      valid: false,
-      // touched: false
+      valid: false
     },
     password: {
       value: '',
@@ -31,8 +29,7 @@ class Signup extends React.Component {
         minLength: 8,
         maxLength: 72
       },
-      valid: false,
-      // touched: false
+      valid: false
     },
     password_confirmation: {
       value: '',
@@ -42,8 +39,7 @@ class Signup extends React.Component {
         maxLength: 72,
         match: true
       },
-      valid: false,
-      // touched: false
+      valid: false
     },
     formIsValid: false,
     error: ''
@@ -111,12 +107,39 @@ class Signup extends React.Component {
     this.setState({ ...clone })
   };
 
+  dismissErrorHandler = () => {
+    const nameUpdate = {
+      ...this.state.name,
+      value: ''
+    }
+    const emailUpdate = {
+      ...this.state.email,
+      value: ''
+    }
+    const passwordUpdate = {
+      ...this.state.password,
+      value: ''
+    }
+    const passwordConfirmationUpdate = {
+      ...this.state.password_confirmation,
+      value: ''
+    }
+    // clear input fields and reset error value
+    this.setState({
+      name: nameUpdate,
+      email: emailUpdate,
+      password: passwordUpdate,
+      password_confirmation: passwordConfirmationUpdate,
+      error: ''
+    });
+  }
+
   render(){
     let errorMessage = null;
     if(this.state.error) {
       errorMessage = (
         <div className="alert alert-danger" role="alert">
-          <button type="button" className="close" data-dismiss="alert">
+          <button onClick={ this.dismissErrorHandler } type="button" className="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
           </button>
           <strong>{ this.state.error }</strong>
@@ -129,7 +152,7 @@ class Signup extends React.Component {
         { errorMessage }
 
         <h1 className="center">Signup page</h1>
-        
+
         <form onSubmit={ this.onSubmitHandler }>
           <div className="Input">
             <label className="Label">Name</label>
