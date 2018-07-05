@@ -89,7 +89,6 @@ class Signup extends React.Component {
     // update state
     const value = e.target.value;
     const clone = { ...this.state };
-    // clone[name].touched = true;
     clone[name].valid = checkInputValidity(value, clone[name].validation);
     clone[name].value = value;
 
@@ -199,7 +198,7 @@ class Signup extends React.Component {
             <input
               type="submit"
               disabled={ !this.state.formIsValid }
-              value="Submit"
+              value="Signup"
             />
           </div>
         </form>  
