@@ -17,7 +17,7 @@ const toolbar = () => {
         <Navbar.Collapse>
           <Nav pullRight>
             <NavItem link="/" exact>Home</NavItem>
-            <NavItem link="#">Gallery</NavItem>
+            <NavItem link="/gallery">Gallery</NavItem>
             <NavItem link="/login" exact>Login</NavItem>
             <NavItem link="/logout">Logout</NavItem>
           </Nav>
