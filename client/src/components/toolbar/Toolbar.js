@@ -3,6 +3,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 
 import Logo from './Logo';
 import NavItem from './NavItem';
+import { isAuthenticated } from '../../utilities/auth-helpers';
 
 const toolbar = () => {
   return (
@@ -18,8 +19,11 @@ const toolbar = () => {
           <Nav pullRight>
             <NavItem link="/" exact>Home</NavItem>
             <NavItem link="/gallery">Gallery</NavItem>
-            <NavItem link="/login" exact>Login</NavItem>
-            <NavItem link="/logout">Logout</NavItem>
+            {(isAuthenticated())? (
+              <NavItem link="/logout">Logout</NavItem>
+            ) : (
+              <NavItem link="/login" exact>Login</NavItem>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
