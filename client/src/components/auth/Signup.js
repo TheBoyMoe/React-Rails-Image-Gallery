@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import checkInputValidity from '../../utilities/CheckValidity';
-import { register } from '../../utilities/api-helpers';
+import { register, signin } from '../../utilities/api-helpers';
+import { isAuthenticated, saveToken } from '../../utilities/auth-helpers';
 
 class Signup extends React.Component {
   state = {
@@ -56,13 +57,27 @@ class Signup extends React.Component {
       "password": this.state.password.value,
       "password_confirmation": this.state.password_confirmation.value
     }
-    // register user
+    // register user and signin if successful
     register({"user": user})
       .then(res => {
         if(res && res.ok){
           if(res.status === 200){
             this.setState({ error: ''});
-            console.log("User registered successfully")
+            signin({
+              "auth": { "email": this.state.email.value, "password": this.state.password.value }
+            })
+            .then(response => {
+              if(response.ok && response.status === 201){
+                return response.json();
+              } else {
+                console.log(response)
+                this.setState({ error: response.statusText} );
+              }
+            })
+            .then(jwt => {
+              if(jwt) saveToken(jwt);
+              console.log('isAuthenticated', !!isAuthenticated());
+            });
           } else {
             this.setState({ error: 'User already registered' });
             console.log('User already registered');
@@ -71,6 +86,7 @@ class Signup extends React.Component {
           this.setState({ error: res.statusText })
         }  
       })
+      .catch(err => console.log(err));
   };
 
   onChangeHandler = (e, name) => {
