@@ -19,7 +19,7 @@ const toolbar = () => {
             <NavItem link="/" exact>Home</NavItem>
             <NavItem link="#">Gallery</NavItem>
             <NavItem link="/login" exact>Login</NavItem>
-            <NavItem link="#">Logout</NavItem>
+            <NavItem link="/logout">Logout</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
