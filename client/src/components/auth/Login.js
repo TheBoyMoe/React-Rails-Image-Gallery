@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import checkInputValidity from '../../utilities/CheckValidity';
-import { login } from '../../store/actions/index';
+import { login, reset } from '../../store/actions/index';
 // import { signin } from '../../utilities/api-helpers';
 // import { isAuthenticated, saveToken, removeToken } from '../../utilities/auth-helpers';
 
@@ -93,12 +93,11 @@ export class Login extends React.Component {
     }
     // clear input fields and reset error value
     this.setState({
-      name: nameUpdate,
       email: emailUpdate,
-      password: passwordUpdate,
-      password_confirmation: passwordConfirmationUpdate,
-      error: ''
+      password: passwordUpdate
+      // error: ''
     });
+    this.props.resetError();
   }
 
   render(){
@@ -168,7 +167,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (email , password) => dispatch(login(email, password))
+    login: (email , password) => dispatch(login(email, password)),
+    resetError: () => dispatch(reset())
   }
 }
 

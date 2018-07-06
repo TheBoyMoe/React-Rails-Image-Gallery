@@ -23,7 +23,9 @@ export default (state = initialState, action) => {
         ...state,
         token: null,
         error: action.error
-      }; 
+      };
+    case actionTypes.RESET_STATE:
+      return initialState;
     default:
       return state;
   }

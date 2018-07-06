@@ -54,3 +54,9 @@ export const login = (email, password) => {
     });
   }
 }
+
+export const reset = () => {
+  return {
+    type: actionTypes.RESET_STATE
+  }
+}

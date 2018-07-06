@@ -1,3 +1,4 @@
 export {
-  login
+  login,
+  reset
 } from './auth';
