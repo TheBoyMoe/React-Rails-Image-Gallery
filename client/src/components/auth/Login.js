@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import checkInputValidity from '../../utilities/CheckValidity';
-import { signin } from '../../utilities/api-helpers';
-import { isAuthenticated, saveToken, removeToken } from '../../utilities/auth-helpers';
+import { login } from '../../store/actions/index';
+// import { signin } from '../../utilities/api-helpers';
+// import { isAuthenticated, saveToken, removeToken } from '../../utilities/auth-helpers';
 
-class Login extends React.Component {
+export class Login extends React.Component {
   state = {
     email: {
       value: '',
@@ -23,8 +25,8 @@ class Login extends React.Component {
       },
       valid: false
     },
-    formIsValid: false,
-    error: ''
+    formIsValid: false
+    // error: ''
   }
 
   onChangeHandler = (e, name) => {
@@ -48,26 +50,28 @@ class Login extends React.Component {
   
   onSubmitHandler = (e) => {
     e.preventDefault();
-    removeToken(); // remove any previously saved token
-    signin({
-      "auth": { "email": this.state.email.value, "password": this.state.password.value }
-    })
-    .then(response => {
-      if(response.ok && response.status === 201){
-        return response.json();
-      } else {
-        this.setState({ error: 'User not found or password is invalid' });
-      }
-    })
-    .then(jwt => {
-      if(jwt) {
-        // login user and redirect 
-        saveToken(jwt);
-        this.props.history.push('/gallery');
-      }
-      console.log('isAuthenticated', !!isAuthenticated());
-    })
-    .catch(err => console.log('Signin error', err));
+    this.props.login(this.state.email.value, this.state.password.value);
+
+    // removeToken(); // remove any previously saved token
+    // signin({
+    //   "auth": { "email": this.state.email.value, "password": this.state.password.value }
+    // })
+    // .then(response => {
+    //   if(response.ok && response.status === 201){
+    //     return response.json();
+    //   } else {
+    //     this.setState({ error: 'User not found or password is invalid' });
+    //   }
+    // })
+    // .then(jwt => {
+    //   if(jwt) {
+    //     // login user and redirect 
+    //     saveToken(jwt);
+    //     this.props.history.push('/gallery');
+    //   }
+    //   console.log('isAuthenticated', !!isAuthenticated());
+    // })
+    // .catch(err => console.log('Signin error', err));
   }
 
   dismissErrorHandler = () => {
@@ -99,13 +103,13 @@ class Login extends React.Component {
 
   render(){
     let errorMessage = null;
-    if(this.state.error) {
+    if(this.props.error) {
       errorMessage = (
         <div className="alert alert-danger" role="alert">
           <button onClick={ this.dismissErrorHandler } type="button" className="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
           </button>
-          <strong>{ this.state.error }</strong>
+          <strong>{ this.props.error }</strong>
         </div>
       );
     }
@@ -155,4 +159,17 @@ class Login extends React.Component {
     );
   }
 }
-export default Login;
+
+const mapStateToProps = (state) => {
+  return {
+    error: state.auth.error
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (email , password) => dispatch(login(email, password))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
