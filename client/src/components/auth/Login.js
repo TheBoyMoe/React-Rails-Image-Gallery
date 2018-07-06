@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import checkInputValidity from '../../utilities/CheckValidity';
 import { login, reset } from '../../store/actions/index';
 // import { signin } from '../../utilities/api-helpers';
@@ -101,6 +103,11 @@ export class Login extends React.Component {
   }
 
   render(){
+    let authRedirect = null;
+    if(this.props.isAuthenticated){
+      authRedirect = <Redirect to="/gallery" />;
+    }
+
     let errorMessage = null;
     if(this.props.error) {
       errorMessage = (
@@ -115,6 +122,7 @@ export class Login extends React.Component {
 
     return (
       <div className="App Form">
+        { authRedirect }
         { errorMessage }
 
         <h1 className="center">Login page</h1>
@@ -161,7 +169,8 @@ export class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.auth.error
+    error: state.auth.error,
+    isAuthenticated: !!state.auth.token
   }
 }
 
