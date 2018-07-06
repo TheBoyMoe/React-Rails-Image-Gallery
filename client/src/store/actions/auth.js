@@ -42,16 +42,21 @@ export const login = (email, password) => {
     })
     .then(token => {
       if(token) {
-        // login user and redirect 
-        auth.saveToken(token);
+        auth.saveToken(token); // save to sessionStorage
         dispatch(loginSuccess(token))
       }
-      console.log('isAuthenticated', !!auth.isAuthenticated());
     })
     .catch(err => {
       console.log('Signin error', err);
       dispatch(loginFailure('Unknown error, try again'));
     });
+  }
+}
+
+export const logout = () => {
+  auth.removeToken(); // remove form sessionStorage
+  return {
+    type: actionTypes.LOGOUT_USER
   }
 }
 

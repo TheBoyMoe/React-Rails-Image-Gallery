@@ -1,10 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../../store/actions/index';
+
 import { removeToken } from '../../utilities/auth-helpers';
 
-class Logout extends React.Component {
+export class Logout extends React.Component {
   componentDidMount(){
-    removeToken();
+    this.props.logout();
   }
 
   render(){
@@ -13,4 +16,11 @@ class Logout extends React.Component {
     );
   }
 }
-export default Logout;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(logout())
+  }
+};
+
+export default connect(null, mapDispatchToProps)(Logout);
