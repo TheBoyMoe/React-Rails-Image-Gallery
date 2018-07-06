@@ -24,9 +24,25 @@ export default (state = initialState, action) => {
         token: null,
         error: action.error
       };
+    case actionTypes.SIGNUP_USER:
+    case actionTypes.SIGNUP_SUCCESS:
+      return {
+        ...state,
+        error: null
+      };
+    case actionTypes.SIGNUP_FAILURE:
+      return {
+        ...state,
+        token: null,
+        error: action.error  
+      };  
     case actionTypes.LOGOUT_USER:  
     case actionTypes.RESET_STATE:
-      return initialState;
+      return {
+        ...state,
+        token: null,
+        error: null
+      };
     default:
       return state;
   }

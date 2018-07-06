@@ -4,4 +4,8 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const LOGOUT_USER = 'LOGOUT_USER';
 
+export const SIGNUP_USER = 'SIGNUP_USER';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+
 export const RESET_STATE = 'RESET_STATE';

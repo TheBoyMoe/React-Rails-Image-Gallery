@@ -23,6 +23,25 @@ const loginFailure = (err) => {
   };
 };
 
+const signupUser = () => {
+  return {
+    type: actionTypes.SIGNUP_USER
+  };
+};
+
+const signupSuccess = () => {
+  return {
+    type: actionTypes.SIGNUP_SUCCESS
+  };
+};
+
+const signupFailure = (error) => {
+  return {
+    type: actionTypes.SIGNUP_FAILURE,
+    error: error
+  };
+};
+
 // async action which logs the user in
 export const login = (email, password) => {
   const user = {
@@ -64,4 +83,9 @@ export const reset = () => {
   return {
     type: actionTypes.RESET_STATE
   }
+}
+
+// async action which registers user
+export const signup = (name, email, password, password_confirmation) => {
+  
 }
