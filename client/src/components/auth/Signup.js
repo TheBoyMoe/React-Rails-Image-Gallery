@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import checkInputValidity from '../../utilities/CheckValidity';
@@ -147,6 +147,11 @@ export class Signup extends React.Component {
   }
 
   render(){
+    let authRedirect = null;
+    if(this.props.isAuthenticated){
+      authRedirect = <Redirect to="/gallery" />;
+    }
+
     let errorMessage = null;
     if(this.props.error) {
       errorMessage = (
@@ -161,6 +166,7 @@ export class Signup extends React.Component {
 
     return (
       <div className="App Form">
+        { authRedirect }
         { errorMessage }
 
         <h1 className="center">Signup page</h1>
@@ -228,7 +234,8 @@ export class Signup extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.auth.error
+    error: state.auth.error,
+    isAuthenticated: !!state.auth.token
   }
 };
 
