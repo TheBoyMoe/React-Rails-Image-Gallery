@@ -9,7 +9,6 @@ const loginUser = () => {
 };
 
 const loginSuccess = (token) => {
-  auth.saveToken(token); // save to sessionStorage
   return {
     type: actionTypes.LOGIN_SUCCESS,
     token: token
@@ -61,7 +60,7 @@ export const login = (email, password) => {
     })
     .then(token => {
       if(token) {
-        // auth.saveToken(token); // save to sessionStorage
+        auth.saveToken(token); // save to sessionStorage
         dispatch(loginSuccess(token))
       }
     })
@@ -113,7 +112,7 @@ export const signup = (name, email, password, password_confirmation) => {
           })
           .then(token => {
             if(token) {
-              // auth.saveToken(token); // save to sessionStorage
+              auth.saveToken(token); // save to sessionStorage
               dispatch(loginSuccess(token));
             } 
           });
@@ -131,3 +130,11 @@ export const signup = (name, email, password, password_confirmation) => {
     });
   }
 }
+
+// log the user in if they have a token saved to sessionStorage
+export const checkAuthState = () => {
+  return (dispatch) => {
+    const token = auth.isAuthenticated();
+    (token)? dispatch(loginSuccess(token)) : dispatch(logout());
+  }
+};
