@@ -5,8 +5,6 @@ import { Redirect } from 'react-router-dom';
 
 import checkInputValidity from '../../utilities/CheckValidity';
 import { login, reset } from '../../store/actions/index';
-// import { signin } from '../../utilities/api-helpers';
-// import { isAuthenticated, saveToken, removeToken } from '../../utilities/auth-helpers';
 
 export class Login extends React.Component {
   state = {
@@ -28,7 +26,6 @@ export class Login extends React.Component {
       valid: false
     },
     formIsValid: false
-    // error: ''
   }
 
   onChangeHandler = (e, name) => {
@@ -53,27 +50,6 @@ export class Login extends React.Component {
   onSubmitHandler = (e) => {
     e.preventDefault();
     this.props.login(this.state.email.value, this.state.password.value);
-
-    // removeToken(); // remove any previously saved token
-    // signin({
-    //   "auth": { "email": this.state.email.value, "password": this.state.password.value }
-    // })
-    // .then(response => {
-    //   if(response.ok && response.status === 201){
-    //     return response.json();
-    //   } else {
-    //     this.setState({ error: 'User not found or password is invalid' });
-    //   }
-    // })
-    // .then(jwt => {
-    //   if(jwt) {
-    //     // login user and redirect 
-    //     saveToken(jwt);
-    //     this.props.history.push('/gallery');
-    //   }
-    //   console.log('isAuthenticated', !!isAuthenticated());
-    // })
-    // .catch(err => console.log('Signin error', err));
   }
 
   dismissErrorHandler = () => {
@@ -97,7 +73,6 @@ export class Login extends React.Component {
     this.setState({
       email: emailUpdate,
       password: passwordUpdate
-      // error: ''
     });
     this.props.resetError();
   }
