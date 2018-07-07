@@ -9,7 +9,7 @@ const loginUser = () => {
 };
 
 const loginSuccess = (token) => {
-  // saveToken(token); // save token to sessionStorage
+  auth.saveToken(token); // save to sessionStorage
   return {
     type: actionTypes.LOGIN_SUCCESS,
     token: token
@@ -61,7 +61,7 @@ export const login = (email, password) => {
     })
     .then(token => {
       if(token) {
-        auth.saveToken(token); // save to sessionStorage
+        // auth.saveToken(token); // save to sessionStorage
         dispatch(loginSuccess(token))
       }
     })
@@ -113,7 +113,7 @@ export const signup = (name, email, password, password_confirmation) => {
           })
           .then(token => {
             if(token) {
-              auth.saveToken(token); // save to sessionStorage
+              // auth.saveToken(token); // save to sessionStorage
               dispatch(loginSuccess(token));
             } 
           });
