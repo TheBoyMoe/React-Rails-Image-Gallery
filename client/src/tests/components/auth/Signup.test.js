@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Signup from '../../../components/auth/Signup';
+import { Signup } from '../../../components/auth/Signup';
 
 let wrapper;
 
