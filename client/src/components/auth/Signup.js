@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import checkInputValidity from '../../utilities/CheckValidity';
-import { signup } from '../../store/actions/index';
+import { signup, reset } from '../../store/actions/index';
 // import { register, signin } from '../../utilities/api-helpers';
 // import { isAuthenticated, saveToken } from '../../utilities/auth-helpers';
 
@@ -141,19 +141,20 @@ export class Signup extends React.Component {
       email: emailUpdate,
       password: passwordUpdate,
       password_confirmation: passwordConfirmationUpdate,
-      error: ''
+      // error: ''
     });
+    this.props.resetError();
   }
 
   render(){
     let errorMessage = null;
-    if(this.state.error) {
+    if(this.props.error) {
       errorMessage = (
         <div className="alert alert-danger" role="alert">
           <button onClick={ this.dismissErrorHandler } type="button" className="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
           </button>
-          <strong>{ this.state.error }</strong>
+          <strong>{ this.props.error }</strong>
         </div>
       );
     }
@@ -225,10 +226,17 @@ export class Signup extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    register: (name, email, password, password_confirmation) => dispatch(signup(name, email, password, password_confirmation))
+    error: state.auth.error
   }
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+const mapDispatchToProps = dispatch => {
+  return {
+    register: (name, email, password, password_confirmation) => dispatch(signup(name, email, password, password_confirmation)),
+    resetError: () => dispatch(reset())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
