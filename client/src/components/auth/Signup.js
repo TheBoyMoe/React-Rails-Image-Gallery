@@ -1,10 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import checkInputValidity from '../../utilities/CheckValidity';
-import { register, signin } from '../../utilities/api-helpers';
-import { isAuthenticated, saveToken } from '../../utilities/auth-helpers';
+import { connect } from 'react-redux';
 
-class Signup extends React.Component {
+import checkInputValidity from '../../utilities/CheckValidity';
+import { signup } from '../../store/actions/index';
+// import { register, signin } from '../../utilities/api-helpers';
+// import { isAuthenticated, saveToken } from '../../utilities/auth-helpers';
+
+export class Signup extends React.Component {
   state = {
     name: {
       value: '',
@@ -42,49 +45,56 @@ class Signup extends React.Component {
       valid: false
     },
     formIsValid: false,
-    error: ''
+    // error: ''
   }
 
   onSubmitHandler = (e) => {
     e.preventDefault();
-    const user = {
-      "name": this.state.name.value,
-      "email": this.state.email.value,
-      "password": this.state.password.value,
-      "password_confirmation": this.state.password_confirmation.value
-    }
-    // register user and signin if successful
-    register({"user": user})
-      .then(res => {
-        if(res && res.ok){
-          if(res.status === 200){
-            this.setState({ error: ''});
-            signin({
-              "auth": { "email": this.state.email.value, "password": this.state.password.value }
-            })
-            .then(response => {
-              if(response.ok && response.status === 201){
-                return response.json();
-              } else {
-                this.setState({ error: response.statusText });
-              }
-            })
-            .then(jwt => {
-              if(jwt) {
-                saveToken(jwt);
-                this.props.history.push('/gallery');  
-              } 
-              console.log('isAuthenticated', !!isAuthenticated());
-            });
-          } else {
-            this.setState({ error: 'User already registered' });
-            console.log('User already registered');
-          }
-        } else {
-          this.setState({ error: res.statusText })
-        }  
-      })
-      .catch(err => console.log(err));
+    this.props.register(
+      this.state.name.value,
+      this.state.email.value,
+      this.state.password.value,
+      this.state.password_confirmation.value
+    )
+    
+    // const user = {
+    //   "name": this.state.name.value,
+    //   "email": this.state.email.value,
+    //   "password": this.state.password.value,
+    //   "password_confirmation": this.state.password_confirmation.value
+    // }
+    // // register user and signin if successful
+    // register({"user": user})
+    //   .then(res => {
+    //     if(res && res.ok){
+    //       if(res.status === 200){
+    //         this.setState({ error: ''});
+    //         signin({
+    //           "auth": { "email": this.state.email.value, "password": this.state.password.value }
+    //         })
+    //         .then(response => {
+    //           if(response.ok && response.status === 201){
+    //             return response.json();
+    //           } else {
+    //             this.setState({ error: response.statusText });
+    //           }
+    //         })
+    //         .then(jwt => {
+    //           if(jwt) {
+    //             saveToken(jwt);
+    //             this.props.history.push('/gallery');  
+    //           } 
+    //           console.log('isAuthenticated', !!isAuthenticated());
+    //         });
+    //       } else {
+    //         this.setState({ error: 'User already registered' });
+    //         console.log('User already registered');
+    //       }
+    //     } else {
+    //       this.setState({ error: res.statusText })
+    //     }  
+    //   })
+    //   .catch(err => console.log(err));
   };
 
   onChangeHandler = (e, name) => {
@@ -214,4 +224,11 @@ class Signup extends React.Component {
     );
   }
 }
-export default Signup;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    register: (name, email, password, password_confirmation) => dispatch(signup(name, email, password, password_confirmation))
+  }
+};
+
+export default connect(null, mapDispatchToProps)(Signup);
