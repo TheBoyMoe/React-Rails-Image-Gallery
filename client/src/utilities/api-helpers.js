@@ -21,3 +21,16 @@ export const signin = (data) => {
   })
     .then(res => res);
 };
+
+export const fileUploader = (formData) => {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, */*'
+    },
+    body: formData
+  }
+  // delete options.headers['Content-Type'];
+  return fetch('http://localhost:3001/api/v1/galleries', options)
+    .then(res => console.log(res));
+}

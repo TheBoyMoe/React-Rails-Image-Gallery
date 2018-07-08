@@ -1,4 +1,6 @@
 import React from 'react';
+import { fileUploader } from '../../utilities/api-helpers';
+import axiosClient from '../../utilities/axiosClient';
 
 class GalleryForm extends React.Component {
   state = {
@@ -30,7 +32,12 @@ class GalleryForm extends React.Component {
     e.preventDefault();
     const formData = this.buildFormData();
 
-    // TODO submit the request
+    axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
+    .then(res => console.log(res));
+
+    // TODO submit the request using Fetch Api //FIXME - DOES NOT WORK
+    // fileUploader({'gallery': formData})
+    //   .then(res => console.log(res));
   };
 
   buildFormData = () => {

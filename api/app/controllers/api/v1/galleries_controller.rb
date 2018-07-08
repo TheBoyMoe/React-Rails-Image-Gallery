@@ -49,10 +49,11 @@ module Api
         end
 
         def gallery_params
+          byebug
           params.require(:gallery).permit(
             [
               :title,
-              images_attributes: %i(id file _destroy)
+              images_attributes: %i(id file)
             ]
           )
         end
