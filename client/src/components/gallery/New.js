@@ -1,11 +1,12 @@
 import React from 'react';
 import GalleryForm from './Form';
 
-const galleryNew = () => {
+const galleryNew = (props) => {
   return(
     <div className="App">
       <h2>Add a new gallery</h2>
-      <GalleryForm />
+      <GalleryForm 
+        history={ props.history }/>
     </div>  
   );
 };
