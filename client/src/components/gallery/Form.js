@@ -5,9 +5,7 @@ class GalleryForm extends React.Component {
     title: '',
     images: []
   }
-  componentDidMount(){
-    console.log(this.state)
-  }
+
   titleOnChangeHandler = (e) => {
     const title = e.target.value;
     this.setState({
@@ -17,7 +15,11 @@ class GalleryForm extends React.Component {
   };
 
   fileSelectedHandler = (e) => {
-    const files = e.target.files;
+    const fileList = e.target.files;
+    const files = []
+    for(let i = 0; i < fileList.length; i++){
+      files.push(fileList[i]);
+    }
     this.setState({
       ...this.state,
       images: files
@@ -31,6 +33,27 @@ class GalleryForm extends React.Component {
 
   fileCancelHandler = () => {
     this.props.history.push('/gallery');
+  }
+
+  renderSelectedImages = () => {
+    const images = this.state.images;
+    if(images.length === 0) return null;
+    const list = images.map((image, i) => {
+      return (
+        <li key={i}>
+          <img
+            width={ 150 }
+            src={ image.id ? image.url : URL.createObjectURL(image) }
+            style={{ alignSelf: 'center' }}
+          />
+        </li>
+      )
+    })
+    return (
+      <ul>
+        { list }
+      </ul>
+    )
   }
 
   render(){
@@ -47,18 +70,14 @@ class GalleryForm extends React.Component {
           </div>
           <div>
             <input
-              ref={ (fileInput) => this.fileInput = fileInput }
-              style={{ display: "none" }}
               id="gallery_images"
               type="file"
               multiple={ true }
               onChange={ this.fileSelectedHandler }
               accept="image/*"
             />
-            <button
-              onClick={ () => this.fileInput.click() }
-              className="btn btn-success">Select one or more images</button>
           </div>
+          { this.renderSelectedImages() }
           <div>
             <button
               onClick={ this.fileUploadHandler }
