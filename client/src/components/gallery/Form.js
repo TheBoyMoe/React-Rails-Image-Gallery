@@ -47,17 +47,22 @@ class GalleryForm extends React.Component {
           </div>
           <div>
             <input
+              ref={ (fileInput) => this.fileInput = fileInput }
+              style={{ display: "none" }}
               id="gallery_images"
               type="file"
               multiple={ true }
               onChange={ this.fileSelectedHandler }
               accept="image/*"
             />
+            <button
+              onClick={ () => this.fileInput.click() }
+              className="btn btn-success">Select one or more images</button>
           </div>
           <div>
             <button
               onClick={ this.fileUploadHandler }
-              className="btn btn-primary">Save</button>
+              className="btn btn-primary">Upload</button>
             <button 
               onClick={ this.fileCancelHandler }
               className="btn btn-default">Cancel</button>
