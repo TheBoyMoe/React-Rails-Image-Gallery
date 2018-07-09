@@ -66,7 +66,6 @@ class GalleryForm extends React.Component {
       return (
         <li key={i}>
           <img
-            width={150}
             src={image.id ? image.url : URL.createObjectURL(image)}
             style={{ alignSelf: 'center' }}
           />
@@ -74,7 +73,7 @@ class GalleryForm extends React.Component {
       )
     })
     return (
-      <ul>
+      <ul className="gallery">
         {list}
       </ul>
     )

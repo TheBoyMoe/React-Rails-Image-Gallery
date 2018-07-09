@@ -50,7 +50,7 @@ class Show extends React.Component {
     return(
       <div className="App">
         <h1>{ this.state.title }</h1>
-        <ul>
+        <ul className="gallery">
           { this.renderGalleryImages() }
         </ul>
       </div> 
