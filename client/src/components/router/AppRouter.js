@@ -21,7 +21,7 @@ class AppRouter extends React.Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/" component={ Home } exact />
+        <Route path="/" component={ GalleryIndex } exact />
         <Route path="/gallery/:id" component={ GalleryShow } />
         <Route path="/gallery" component={ GalleryIndex } />
         <Route path="/login" component={ Login } />
@@ -32,7 +32,7 @@ class AppRouter extends React.Component {
     if(!!isAuthenticated()){
       routes = (
         <Switch>
-          <Route path="/" component={ Home } exact />
+          <Route path="/" component={ GalleryIndex } exact />
           <Route path="/gallery/new" component={ GalleryNew } />
           <Route path="/gallery/:id" component={ GalleryShow } />
           <Route path="/gallery" component={ GalleryIndex } />

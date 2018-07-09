@@ -4,7 +4,7 @@ import GalleryForm from './Form';
 const galleryNew = (props) => {
   return(
     <div className="App">
-      <h2>Add a new gallery</h2>
+      <h2>Create a new Collection</h2>
       <GalleryForm 
         history={ props.history }/>
     </div>  

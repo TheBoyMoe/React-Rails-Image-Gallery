@@ -17,10 +17,10 @@ const toolbar = () => {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem link="/" exact>Home</NavItem>
-            <NavItem link="/gallery" exact>Gallery</NavItem>
+            {/* <NavItem link="/" exact>Home</NavItem> */}
+            <NavItem link="/gallery" exact>Explore</NavItem>
             {(!!isAuthenticated())? (
-              <NavItem link="/gallery/new" exact>New Gallery</NavItem>
+              <NavItem link="/gallery/new" exact>New Collection</NavItem>
             ) : null}
             {(!!isAuthenticated())? (
               <NavItem link="/logout">Logout</NavItem>
