@@ -5,7 +5,8 @@ import axiosClient from '../../utilities/axiosClient';
 class GalleryForm extends React.Component {
   state = {
     title: '',
-    images: []
+    images: [],
+    numberOfSelectedImages: 0
   }
 
   titleOnChangeHandler = (e) => {
@@ -24,7 +25,8 @@ class GalleryForm extends React.Component {
     }
     this.setState({
       ...this.state,
-      images: files
+      images: files,
+      numberOfSelectedImages: files.length
     });
   };
 
@@ -84,32 +86,50 @@ class GalleryForm extends React.Component {
       <div className="GalleryForm">
         <form>
           <div className="form-group">
-            <label>Title</label><br />
             <input
               type="text"
-              placeholder="Add a title (required)"
+              placeholder="Give the collection a title (required)"
               onChange={this.titleOnChangeHandler}
               value={this.state.title}
             />
-          </div>
-          <div className="form-group">
             <input
               id="gallery_images"
               type="file"
               multiple={true}
               onChange={this.fileSelectedHandler}
               accept="image/*"
-            />
+              style={{
+                width: 0.1,
+                height: 0.1,
+                opacity: 0,
+                overflow: 'hidden',
+                position: 'absolute',
+                zIndex: -1
+              }}
+            />&nbsp;
+             <label
+              className="btn btn-success"
+              htmlFor="gallery_images">
+              <span className="glyphicon glyphicon-cloud-upload" />
+              &nbsp; &nbsp;
+              {this.state.numberOfSelectedImages === 0
+                ? 'Upload Files'
+                : `${this.state.numberOfSelectedImages} file${this.state.numberOfSelectedImages !== 1
+                    ? 's'
+                    : ''} selected`}
+            </label>&nbsp;
+            { (this.state.numberOfSelectedImages > 0)? (
+              <div style={{display: 'inline-block'}}>
+                <button
+                  onClick={this.fileUploadHandler}
+                  className="btn btn-primary">Upload</button>&nbsp;
+                <button
+                  onClick={this.fileCancelHandler}
+                  className="btn btn-default">Cancel</button>
+              </div>
+            ) : null}
           </div>
           {this.renderSelectedImages()}
-          <div className="form-group">
-            <button
-              onClick={this.fileUploadHandler}
-              className="btn btn-primary">Upload</button>
-            <button
-              onClick={this.fileCancelHandler}
-              className="btn btn-default">Cancel</button>
-          </div>
         </form>
       </div>
     );
