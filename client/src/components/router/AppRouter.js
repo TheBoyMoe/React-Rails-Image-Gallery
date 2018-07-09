@@ -22,8 +22,8 @@ class AppRouter extends React.Component {
     let routes = (
       <Switch>
         <Route path="/" component={ Home } exact />
-        <Route path="/gallery" component={ GalleryIndex } />
         <Route path="/gallery/:id" component={ GalleryShow } />
+        <Route path="/gallery" component={ GalleryIndex } />
         <Route path="/login" component={ Login } />
         <Route path="/signup" component={ Signup } />
         <Route component={ NotFound } />
