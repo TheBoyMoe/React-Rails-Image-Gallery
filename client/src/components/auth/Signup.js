@@ -122,7 +122,7 @@ export class Signup extends React.Component {
     }
 
     return (
-      <div className="App Form">
+      <div className="App Form container">
         { authRedirect }
         { errorMessage }
 

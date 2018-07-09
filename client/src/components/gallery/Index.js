@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { fetchGalleriesImages } from '../../utilities/api-helpers';
+import Banner from '../ui/banner';
 
 class Gallery extends React.Component {
   state = {
@@ -57,9 +58,9 @@ class Gallery extends React.Component {
 
   render(){
     return(
-      <div className="App GalleryIndex">
-        <h1>Gallery</h1>
-        <ul className="gallery">
+      <div className="GalleryIndex">
+        <Banner />
+        <ul className="container gallery">
           { this.renderImageGallery() }
         </ul>
       </div>  

@@ -96,7 +96,7 @@ export class Login extends React.Component {
     }
 
     return (
-      <div className="App Form">
+      <div className="App Form container">
         { authRedirect }
         { errorMessage }
 

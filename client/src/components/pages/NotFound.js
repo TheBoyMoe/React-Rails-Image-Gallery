@@ -21,7 +21,7 @@ const containerStyles = {
 
 const notFound = () => {
   return (
-    <div className="App">
+    <div className="App container">
       <div style={ containerStyles }>
         <h1 style={ textStyles }>404</h1>
       </div>

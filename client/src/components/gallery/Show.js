@@ -48,7 +48,7 @@ class Show extends React.Component {
 
   render(){
     return(
-      <div className="App">
+      <div className="App container">
         <h1>{ this.state.title }</h1>
         <ul className="gallery">
           { this.renderGalleryImages() }

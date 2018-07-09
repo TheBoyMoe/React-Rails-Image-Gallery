@@ -43,7 +43,7 @@ class AppRouter extends React.Component {
     }
   
     return (
-      <div className="container">
+      <div>
         { routes }  
       </div>
     );
