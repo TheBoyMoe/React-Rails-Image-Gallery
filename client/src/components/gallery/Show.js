@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { fetchGalleryImages } from '../../utilities/api-helpers';
 
 class Show extends React.Component {
@@ -8,20 +9,46 @@ class Show extends React.Component {
     images: []
   }
 
-  // TODO fetch gallery when component mounts
   componentDidMount(){
     const id = this.props.match.params.id;
     if(id) {
       fetchGalleryImages(id)
-        .then(res => console.log('RESPONSE', res))
-        .catch(err => console.log(err));
+        .then(res => {
+          if(res.ok && res.status === 200){
+            return res.json();
+          }
+        }) 
+        .then(res => {
+          this.setState({
+            id: res.id,
+            title: res.title,
+            images: res.image_files,
+            redirect: false
+          })
+        })
+        .catch(err => {
+          console.log('Error fetching gallery images:', err);
+          this.props.history.push('/gallery');
+        });
+    }
+  }
+
+  renderGalleryImages = () => {
+    const images = this.state.images;
+    if(images.length > 0){
+      return images.map(image => {
+        return <li className="image" key={ image.id }><img src={ image.url } alt={ image.name } /></li>
+      })
     }
   }
 
   render(){
     return(
       <div className="App">
-        <h1>Gallery Title</h1>
+        <h1>{ this.state.title }</h1>
+        <ul>
+          { this.renderGalleryImages() }
+        </ul>
       </div> 
     );
   };
