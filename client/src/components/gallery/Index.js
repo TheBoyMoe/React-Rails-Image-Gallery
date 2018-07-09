@@ -30,7 +30,7 @@ class Gallery extends React.Component {
     const galleries = this.state.galleries;
     let images = [];
     galleries.forEach((gallery) => {
-      images.push({galleryId: gallery.id, image: gallery.image_files[0]})
+      images.push({galleryId: gallery.id, image: gallery.image_files[0], title: gallery.title})
     })
     images = images.sort(this.reverseImagesOrder);
 
@@ -39,6 +39,9 @@ class Gallery extends React.Component {
         return (<li className="image" key={ obj.galleryId }>
               <a href={`/gallery/${obj.galleryId}`}>
                 <img src={ obj.image.url } alt={ obj.image.name }/>
+                <div className="title">
+                  <h3>{ obj.title }</h3>
+                </div>
               </a>
             </li>
           );
