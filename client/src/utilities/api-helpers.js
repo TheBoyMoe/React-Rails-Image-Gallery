@@ -46,3 +46,15 @@ export const fetchGalleryImages = (id) => {
   return fetch(`http://localhost:3001/api/v1/galleries/${id}`, options)
     .then(res => res);
 }
+
+export const fetchGalleriesImages = () => {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }
+  return fetch(`http://localhost:3001/api/v1/galleries`, options)
+    .then(res => res);
+}

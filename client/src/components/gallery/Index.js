@@ -1,23 +1,29 @@
 import React from 'react';
 
+import { fetchGalleriesImages } from '../../utilities/api-helpers';
+
 class Gallery extends React.Component {
   state = {
-    isMounted: false,
     galleries: []
   }
 
   componentDidMount(){
-    this.setState({
-      isMounted: true
-    }, this.fetchGalleries())
-  }
-
-  componentWillUnmount() {
-    this.setState({ isMounted: false });
+    this.fetchGalleries();
   }
   
   fetchGalleries = () => {
-    // TODO make fetch call 
+    fetchGalleriesImages()
+      .then(res => {
+        if(res.ok && res.status === 200){
+          return res.json();  
+        }
+      })
+      .then(res => {
+        this.setState({
+          galleries: res
+        })
+      })
+      .catch(err => console.log('Error fetching galleries', err));
   }
 
   renderImageGallery = () => {
