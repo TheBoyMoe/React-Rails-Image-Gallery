@@ -34,3 +34,15 @@ export const fileUploader = (formData) => {
   return fetch('http://localhost:3001/api/v1/galleries', options)
     .then(res => console.log(res));
 }
+
+export const fetchGalleryImages = (id) => {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }
+  return fetch(`http://localhost:3001/api/v1/galleries/${id}`, options)
+    .then(res => res);
+}

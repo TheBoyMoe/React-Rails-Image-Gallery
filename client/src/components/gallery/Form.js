@@ -1,5 +1,5 @@
 import React from 'react';
-import { fileUploader } from '../../utilities/api-helpers';
+// import { fileUploader } from '../../utilities/api-helpers';
 import axiosClient from '../../utilities/axiosClient';
 
 class GalleryForm extends React.Component {
@@ -33,7 +33,11 @@ class GalleryForm extends React.Component {
     const formData = this.buildFormData();
 
     axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
-    .then(res => console.log(res));
+    .then(res => {
+      const id = res.data.id;
+      (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
+    })
+    .catch(err => console.log(err));
 
     // TODO submit the request using Fetch Api //FIXME - DOES NOT WORK
     // fileUploader({'gallery': formData})
@@ -80,15 +84,16 @@ class GalleryForm extends React.Component {
     return (
       <div className="GalleryForm">
         <form>
-          <div>
-            <label>Title</label>
+          <div className="form-group">
+            <label>Title</label><br />
             <input
               type="text"
+              placeholder="Add a title (required)"
               onChange={this.titleOnChangeHandler}
               value={this.state.title}
             />
           </div>
-          <div>
+          <div className="form-group">
             <input
               id="gallery_images"
               type="file"
@@ -98,7 +103,7 @@ class GalleryForm extends React.Component {
             />
           </div>
           {this.renderSelectedImages()}
-          <div>
+          <div className="form-group">
             <button
               onClick={this.fileUploadHandler}
               className="btn btn-primary">Upload</button>
