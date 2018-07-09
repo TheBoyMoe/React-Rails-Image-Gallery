@@ -66,11 +66,8 @@ class GalleryForm extends React.Component {
     if (images.length === 0) return null;
     const list = images.map((image, i) => {
       return (
-        <li key={i}>
-          <img
-            src={image.id ? image.url : URL.createObjectURL(image)}
-            style={{ alignSelf: 'center' }}
-          />
+        <li key={i} className="selected-image">
+          <img src={URL.createObjectURL(image)} />
         </li>
       )
     })

@@ -52,3 +52,13 @@
   padding-left: 10px;
   margin-bottom: 10px;
 }
+
+.GalleryForm .selected-image {
+  overflow: hidden;
+  background: #000;
+  display: flex;
+}
+
+.GalleryForm .selected-image img {
+  align-self: center;
+}
