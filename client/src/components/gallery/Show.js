@@ -12,25 +12,29 @@ class Show extends React.Component {
   componentDidMount(){
     const id = this.props.match.params.id;
     if(id) {
-      fetchGalleryImages(id)
-        .then(res => {
-          if(res.ok && res.status === 200){
-            return res.json();
-          }
-        }) 
-        .then(res => {
-          this.setState({
-            id: res.id,
-            title: res.title,
-            images: res.image_files,
-            redirect: false
-          })
-        })
-        .catch(err => {
-          console.log('Error fetching gallery images:', err);
-          this.props.history.push('/gallery');
-        });
+      this.fetchGallery(id);
     }
+  }
+  
+  fetchGallery = (id) => {
+    fetchGalleryImages(id)
+      .then(res => {
+        if(res.ok && res.status === 200){
+          return res.json();
+        }
+      }) 
+      .then(res => {
+        this.setState({
+          id: res.id,
+          title: res.title,
+          images: res.image_files,
+          redirect: false
+        })
+      })
+      .catch(err => {
+        console.log('Error fetching gallery images:', err);
+        this.props.history.push('/gallery');
+      });
   }
 
   renderGalleryImages = () => {
