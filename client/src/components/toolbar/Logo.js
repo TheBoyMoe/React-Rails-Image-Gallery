@@ -9,6 +9,7 @@ const logo = () => {
       <Link to="/gallery">
         <img src={ cameraLogo } alt="Camera Logo" />
       </Link>
+      <p className="title">Usplash Images</p>
     </div>
   );
 };
