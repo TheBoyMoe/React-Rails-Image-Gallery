@@ -8,8 +8,8 @@ const logo = () => {
     <div className="Logo">
       <Link to="/gallery">
         <img src={ cameraLogo } alt="Camera Logo" />
+        <p className="title">Usplash Images</p>
       </Link>
-      <p className="title">Usplash Images</p>
     </div>
   );
 };
