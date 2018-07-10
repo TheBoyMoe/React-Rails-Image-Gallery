@@ -23,8 +23,43 @@
 
 .jumbotron p {
   position: absolute;
-  bottom: 20px;
+  bottom: 80px;
   width: 100%;
   text-align: center;
   color: #ffffff;
+}
+
+.jumbotron p i {
+  font-size: 16px;
+}
+
+.jumbotron h1 {
+  color: white;
+  font-size: 32px;
+  top: 160px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.search {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.search i {
+  position: relative;
+  top: 4px;
+  left: 32px;
+  font-size: 20px;
+  color: #666;
+}
+
+.search input {
+  width: 400px;
+  height: 45px;
+  border-radius: 4px;
+  padding: 10px 4px;
 }

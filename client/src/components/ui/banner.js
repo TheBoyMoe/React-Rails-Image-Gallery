@@ -4,7 +4,14 @@ const banner = () => {
   return (
     <div className="jumbotron jumbotron-fluid">
       <div className="screen">
-        <p className="lead">View the latest additions to our collection.</p>
+        <h1>Usplash - high resolution images for all you needs</h1>
+        <div className="search">
+          <i className="fas fa-search"></i>
+          <input />
+        </div>
+        <p className="lead">Search for beautiful, free photos&nbsp;&nbsp;
+          <i className="fas fa-arrow-down"></i>
+        </p>
       </div>
     </div>
   );
