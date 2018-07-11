@@ -5,3 +5,7 @@ export {
   checkAuthState,
   reset
 } from './auth';
+
+export {
+  uploader
+} from './gallery';

@@ -8,4 +8,8 @@ export const SIGNUP_USER = 'SIGNUP_USER';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 
+export const UPLOAD_FILES = 'UPLOAD_FILES';
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
+export const UPLOAD_FAILURE = 'UPLOAD_FAILURE';
+
 export const RESET_STATE = 'RESET_STATE';

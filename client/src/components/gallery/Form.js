@@ -1,6 +1,6 @@
 import React from 'react';
 import { fileUploader } from '../../utilities/api-helpers';
-import axiosClient from '../../utilities/axiosClient';
+
 
 class GalleryForm extends React.Component {
   state = {
