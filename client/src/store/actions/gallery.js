@@ -22,8 +22,8 @@ const uploadFailure = (error) => {
 };
 
 export const uploader = (formData) => {
-  dispatch(uploadFiles());
   return (dispatch) => {
+    dispatch(uploadFiles());
     api.fileUploader(formData)
       .then(res => {
         if(res && res.status === 201) {

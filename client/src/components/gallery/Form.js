@@ -1,6 +1,8 @@
 import React from 'react';
-import { fileUploader } from '../../utilities/api-helpers';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
+import { uploader } from '../../store/actions/index';
 
 class GalleryForm extends React.Component {
   state = {
@@ -33,16 +35,18 @@ class GalleryForm extends React.Component {
   fileUploadHandler = (e) => {
     e.preventDefault();
     const formData = this.buildFormData();
-    fileUploader(formData)
-      .then(res => {
-        if(res && res.status === 201) {
-          const id = res.data.id;
-          (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
-        } else {
-          console.log('Error uploading files');
-        }
-      })
-      .catch(err => console.log('FileUploaderError', err));
+    this.props.fileUpload(formData); // redux async action
+
+    // api.fileUploader(formData)
+    //   .then(res => {
+    //     if(res && res.status === 201) {
+    //       const id = res.data.id;
+    //       (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
+    //     } else {
+    //       console.log('Error uploading files');
+    //     }
+    //   })
+    //   .catch(err => console.log('FileUploaderError', err));
 
     // axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
     // .then(res => {
@@ -86,8 +90,15 @@ class GalleryForm extends React.Component {
   }
 
   render() {
+    let authRedirect = null;
+    if(this.props.id) {
+      let route = `/gallery/${this.props.id}`;
+      authRedirect = <Redirect to={route} />
+    }
+
     return (
       <div className="GalleryForm">
+        { authRedirect }
         <form>
           <div className="form-group">
             <input
@@ -140,4 +151,16 @@ class GalleryForm extends React.Component {
   }
 };
 
-export default GalleryForm;
+const mapStateToProps = (state) => {
+  return {
+    id: state.gallery.id
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fileUpload: (formData) => dispatch(uploader(formData))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GalleryForm);
