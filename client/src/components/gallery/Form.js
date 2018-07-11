@@ -1,5 +1,5 @@
 import React from 'react';
-// import { fileUploader } from '../../utilities/api-helpers';
+import { fileUploader } from '../../utilities/api-helpers';
 import axiosClient from '../../utilities/axiosClient';
 
 class GalleryForm extends React.Component {
@@ -33,17 +33,24 @@ class GalleryForm extends React.Component {
   fileUploadHandler = (e) => {
     e.preventDefault();
     const formData = this.buildFormData();
+    fileUploader(formData)
+      .then(res => {
+        if(res && res.status === 201) {
+          const id = res.data.id;
+          (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
+        } else {
+          console.log('Error uploading files');
+        }
+      })
+      .catch(err => console.log('FileUploaderError', err));
 
-    axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
-    .then(res => {
-      const id = res.data.id;
-      (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
-    })
-    .catch(err => console.log(err));
+    // axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
+    // .then(res => {
+    //   const id = res.data.id;
+    //   (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
+    // })
+    // .catch(err => console.log(err));
 
-    // TODO submit the request using Fetch Api //FIXME - DOES NOT WORK
-    // fileUploader({'gallery': formData})
-    //   .then(res => console.log(res));
   };
 
   buildFormData = () => {
