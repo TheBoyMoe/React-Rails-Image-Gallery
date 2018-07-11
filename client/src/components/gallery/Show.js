@@ -1,45 +1,52 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { fetchGalleryImages, resetGallery } from '../../store/actions/index';
 
-import { fetchGalleryImages } from '../../utilities/api-helpers';
+// import { fetchGalleryImages } from '../../utilities/api-helpers';
 
 class Show extends React.Component {
-  state = {
-    id: '',
-    title: '',
-    images: []
-  }
+  // state = {
+  //   id: '',
+  //   title: '',
+  //   images: []
+  // }
 
   componentDidMount(){
     const id = this.props.match.params.id;
     if(id) {
-      this.fetchGallery(id);
+      this.props.fetchImages(id);
     }
   }
-  
-  fetchGallery = (id) => {
-    fetchGalleryImages(id)
-      .then(res => {
-        if(res.ok && res.status === 200){
-          return res.json();
-        }
-      }) 
-      .then(res => {
-        this.setState({
-          id: res.id,
-          title: res.title,
-          images: res.image_files,
-          redirect: false
-        })
-      })
-      .catch(err => {
-        console.log('Error fetching gallery images:', err);
-        this.props.history.push('/gallery');
-      });
+
+  componentWillUnmount(){
+    this.props.reset();
   }
+  
+  // fetchGallery = (id) => {
+  //   fetchGalleryImages(id)
+  //     .then(res => {
+  //       if(res.ok && res.status === 200){
+  //         return res.json();
+  //       }
+  //     }) 
+  //     .then(res => {
+  //       this.setState({
+  //         id: res.id,
+  //         title: res.title,
+  //         images: res.image_files,
+  //         redirect: false
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log('Error fetching gallery images:', err);
+  //       this.props.history.push('/gallery');
+  //     });
+  // }
 
   renderGalleryImages = () => {
-    const images = this.state.images;
-    if(images.length > 0){
+    const error = this.props.error;
+    const images = this.props.images;
+    if(!error && images && images.length > 0){
       return images.map(image => {
         return <li className="image" key={ image.id }><img src={ image.url } alt={ image.name } /></li>
       })
@@ -49,7 +56,7 @@ class Show extends React.Component {
   render(){
     return(
       <div className="App container">
-        <h1>{ this.state.title }</h1>
+        <h1>{ this.props.title }</h1>
         <ul className="gallery">
           { this.renderGalleryImages() }
         </ul>
@@ -57,4 +64,20 @@ class Show extends React.Component {
     );
   };
 }
-export default Show;
+
+const mapStateToProps = (state) => {
+  return {
+    title: state.gallery.title,
+    images: state.gallery.images,
+    error: state.gallery.error
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchImages: (id) => dispatch(fetchGalleryImages(id)),
+    reset: () => dispatch(resetGallery())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Show);

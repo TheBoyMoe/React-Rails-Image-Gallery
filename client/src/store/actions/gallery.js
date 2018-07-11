@@ -21,6 +21,28 @@ const uploadFailure = (error) => {
   }
 };
 
+const downloadGallery = () => {
+  return {
+    type: actionTypes.DOWNLOAD_GALLERY
+  }
+};
+
+const downloadGallerySuccess = (id, title, images) => {
+  return {
+    type: actionTypes.DOWNLOAD_GALLERY_SUCCESS,
+    id: id,
+    title: title,
+    images: images
+  }
+};
+
+const downloadGalleryFailure = (error) => {
+  return {
+    type: actionTypes.DOWNLOAD_GALLERY_FAILURE,
+    error: error
+  }
+};
+
 export const uploader = (formData) => {
   return (dispatch) => {
     dispatch(uploadFiles());
@@ -39,10 +61,29 @@ export const uploader = (formData) => {
         dispatch(uploadFailure(err));
       });
   }
-}
+};
 
 export const resetGallery = () => {
   return {
     type: actionTypes.RESET_STATE
   }
+};
+
+export const fetchGalleryImages = (id) => {
+  return (dispatch) => {
+    dispatch(downloadGallery());
+    api.fetchGalleryImages(id)
+      .then(res => {
+        if(res.ok && res.status === 200){
+          return res.json();
+        }
+      }) 
+      .then(res => {
+        dispatch(downloadGallerySuccess(res.id, res.title, res.image_files));
+      })
+      .catch(err => {
+        console.log('Error fetching gallery images:', err);
+        dispatch(downloadGalleryFailure(err));
+      });
+  }  
 }

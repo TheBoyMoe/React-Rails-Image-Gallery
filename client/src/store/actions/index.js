@@ -7,6 +7,7 @@ export {
 } from './auth';
 
 export {
-  uploader, 
+  uploader,
+  fetchGalleryImages,
   resetGallery
 } from './gallery';

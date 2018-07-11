@@ -100,7 +100,7 @@ class GalleryForm extends React.Component {
 
   render() {
     let authRedirect = null;
-    if(this.props.id) {
+    if(this.props.uploaded) {
       let route = `/gallery/${this.props.id}`;
       authRedirect = <Redirect to={route} />
     }
@@ -177,6 +177,7 @@ class GalleryForm extends React.Component {
 const mapStateToProps = (state) => {
   return {
     id: state.gallery.id,
+    uploaded: state.gallery.uploaded,
     error: state.gallery.error
   }
 };
