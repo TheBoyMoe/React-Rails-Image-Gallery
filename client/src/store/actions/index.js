@@ -3,5 +3,12 @@ export {
   logout,
   signup,
   checkAuthState,
-  reset
+  resetAuth
 } from './auth';
+
+export {
+  uploader,
+  fetchGalleryImages,
+  fetchGalleriesImages,
+  resetGallery
+} from './gallery';

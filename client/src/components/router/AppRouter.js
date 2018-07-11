@@ -6,7 +6,9 @@ import Home from '../pages/Home';
 import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import Logout from '../auth/Logout';
-import Gallery from '../pages/Gallery';
+import GalleryIndex from '../gallery/Index';
+import GalleryNew from '../gallery/New';
+import GalleryShow from '../gallery/Show';
 import NotFound from '../pages/NotFound';
 import { isAuthenticated } from '../../utilities/auth-helpers';
 import { checkAuthState } from '../../store/actions/index';
@@ -19,18 +21,21 @@ class AppRouter extends React.Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/" component={ Home } exact />
-        <Route path="/gallery" component={ Gallery } />
+        <Route path="/" component={ GalleryIndex } exact />
+        <Route path="/gallery/:id" component={ GalleryShow } />
+        <Route path="/gallery" component={ GalleryIndex } />
         <Route path="/login" component={ Login } />
         <Route path="/signup" component={ Signup } />
         <Route component={ NotFound } />
       </Switch>
     );
-    if(isAuthenticated()){
+    if(!!isAuthenticated()){
       routes = (
         <Switch>
-          <Route path="/" component={ Home } exact />
-          <Route path="/gallery" component={ Gallery } />
+          <Route path="/" component={ GalleryIndex } exact />
+          <Route path="/gallery/new" component={ GalleryNew } />
+          <Route path="/gallery/:id" component={ GalleryShow } />
+          <Route path="/gallery" component={ GalleryIndex } />
           <Route path="/logout" component={ Logout } />
           <Route component={ NotFound } />
         </Switch>
@@ -38,7 +43,7 @@ class AppRouter extends React.Component {
     }
   
     return (
-      <div className="container">
+      <div>
         { routes }  
       </div>
     );

@@ -78,7 +78,7 @@ export const logout = () => {
   }
 }
 
-export const reset = () => {
+export const resetAuth = () => {
   return {
     type: actionTypes.RESET_STATE
   }

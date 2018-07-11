@@ -11,8 +11,7 @@ class User < ApplicationRecord
     self.email = self.email.to_s.downcase
   }
 
-  def first_n
-    ame
+  def first_name
     self.name.split.first
   end
 

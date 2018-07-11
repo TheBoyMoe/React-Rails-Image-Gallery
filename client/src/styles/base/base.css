@@ -1,3 +1,8 @@
+body {
+  font-family: 'Saira Condensed', sans-serif;
+  min-width: 440px;
+}
+
 .App {
   margin-top: 96px;
 }

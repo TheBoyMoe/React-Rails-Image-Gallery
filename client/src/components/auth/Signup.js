@@ -3,7 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import checkInputValidity from '../../utilities/CheckValidity';
-import { signup, reset } from '../../store/actions/index';
+import { signup, resetAuth } from '../../store/actions/index';
 
 export class Signup extends React.Component {
   state = {
@@ -122,7 +122,7 @@ export class Signup extends React.Component {
     }
 
     return (
-      <div className="App Form">
+      <div className="App Form container">
         { authRedirect }
         { errorMessage }
 
@@ -199,7 +199,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     register: (name, email, password, password_confirmation) => dispatch(signup(name, email, password, password_confirmation)),
-    resetError: () => dispatch(reset())
+    resetError: () => dispatch(resetAuth())
   }
 };
 
