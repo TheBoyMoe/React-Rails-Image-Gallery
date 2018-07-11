@@ -40,3 +40,9 @@ export const uploader = (formData) => {
       });
   }
 }
+
+export const resetGallery = () => {
+  return {
+    type: actionTypes.RESET_STATE
+  }
+}

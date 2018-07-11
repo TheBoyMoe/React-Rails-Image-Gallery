@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { uploader } from '../../store/actions/index';
+import { uploader, resetGallery } from '../../store/actions/index';
 
 class GalleryForm extends React.Component {
   state = {
@@ -89,6 +89,15 @@ class GalleryForm extends React.Component {
     )
   }
 
+  dismissErrorHandler = () => {
+    this.setState({
+      title: '',
+      images: [],
+      numberOfSelectedImages: 0  
+    });
+    this.props.reset();
+  }
+
   render() {
     let authRedirect = null;
     if(this.props.id) {
@@ -96,9 +105,23 @@ class GalleryForm extends React.Component {
       authRedirect = <Redirect to={route} />
     }
 
+    let errorMessage = null;
+    if(this.props.error) {
+      errorMessage = (
+        <div className="alert alert-danger" role="alert">
+          <button onClick={ this.dismissErrorHandler } type="button" className="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Unable to create gallery, ensure all fields are complete</strong>
+        </div>
+      );
+    }
+
     return (
       <div className="GalleryForm">
         { authRedirect }
+        { errorMessage }
+        <h2>Create a new Collection</h2>
         <form>
           <div className="form-group">
             <input
@@ -153,13 +176,15 @@ class GalleryForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    id: state.gallery.id
+    id: state.gallery.id,
+    error: state.gallery.error
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fileUpload: (formData) => dispatch(uploader(formData))
+    fileUpload: (formData) => dispatch(uploader(formData)),
+    reset: () => dispatch(resetGallery())
   }
 };
 

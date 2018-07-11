@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import checkInputValidity from '../../utilities/CheckValidity';
-import { login, reset } from '../../store/actions/index';
+import { login, resetAuth } from '../../store/actions/index';
 
 export class Login extends React.Component {
   state = {
@@ -152,7 +152,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (email , password) => dispatch(login(email, password)),
-    resetError: () => dispatch(reset())
+    resetError: () => dispatch(resetAuth())
   }
 }
 

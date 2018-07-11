@@ -23,7 +23,13 @@ export default (state = initialState, action) => {
         ...state,
         id: null,
         error: action.error
-      }; 
+      };
+    case actionTypes.RESET_STATE:
+      return {
+        ...state,
+        id: null,
+        error: null
+      }  
     default:
       return state;
   }
