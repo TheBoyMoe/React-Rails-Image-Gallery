@@ -9,5 +9,6 @@ export {
 export {
   uploader,
   fetchGalleryImages,
+  fetchGalleriesImages,
   resetGallery
 } from './gallery';

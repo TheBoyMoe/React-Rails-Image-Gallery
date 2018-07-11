@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import { fetchGalleriesImages } from '../../utilities/api-helpers';
+import { fetchGalleriesImages } from '../../store/actions/index';
 import Banner from '../ui/banner';
 
 class Gallery extends React.Component {
@@ -9,45 +10,47 @@ class Gallery extends React.Component {
   }
 
   componentDidMount(){
-    this.fetchGalleries();
+    this.props.fetchGalleries();
   }
   
-  fetchGalleries = () => {
-    fetchGalleriesImages()
-      .then(res => {
-        if(res.ok && res.status === 200){
-          return res.json();  
-        }
-      })
-      .then(res => {
-        this.setState({
-          galleries: res
-        })
-      })
-      .catch(err => console.log('Error fetching galleries', err));
-  }
+  // fetchGalleries = () => {
+  //   fetchGalleriesImages()
+  //     .then(res => {
+  //       if(res.ok && res.status === 200){
+  //         return res.json();  
+  //       }
+  //     })
+  //     .then(res => {
+  //       this.setState({
+  //         galleries: res
+  //       })
+  //     })
+  //     .catch(err => console.log('Error fetching galleries', err));
+  // }
 
   renderImageGallery = () => {
-    const galleries = this.state.galleries;
-    let images = [];
-    galleries.forEach((gallery) => {
-      images.push({galleryId: gallery.id, image: gallery.image_files[0], title: gallery.title})
-    })
-    images = images.sort(this.reverseImagesOrder);
+    const galleries = this.props.galleries;
+    if(galleries){
+      let images = [];
+      galleries.forEach((gallery) => {
+        images.push({galleryId: gallery.id, image: gallery.image_files[0], title: gallery.title})
+      })
+      images = images.sort(this.reverseImagesOrder);
 
-    return images.map(obj => {
-      if (obj.image) {
-        return (<li className="image" key={ obj.galleryId }>
-              <a href={`/gallery/${obj.galleryId}`}>
-                <img src={ obj.image.url } alt={ obj.image.name }/>
-                <div className="title">
-                  <h3>{ obj.title }</h3>
-                </div>
-              </a>
-            </li>
-          );
-      }
-    })
+      return images.map(obj => {
+        if (obj.image) {
+          return (<li className="image" key={ obj.galleryId }>
+                <a href={`/gallery/${obj.galleryId}`}>
+                  <img src={ obj.image.url } alt={ obj.image.name }/>
+                  <div className="title">
+                    <h3>{ obj.title }</h3>
+                  </div>
+                </a>
+              </li>
+            );
+        }
+      })
+    }
   };
 
   reverseImagesOrder = (a, b) => {
@@ -67,4 +70,17 @@ class Gallery extends React.Component {
     );
   }
 };
-export default Gallery;
+
+const mapStateToProps = (state) => {
+  return {
+    galleries: state.gallery.galleries
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchGalleries: () => dispatch(fetchGalleriesImages())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gallery);
