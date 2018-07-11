@@ -3,8 +3,6 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../store/actions/index';
 
-import { removeToken } from '../../utilities/auth-helpers';
-
 export class Logout extends React.Component {
   componentDidMount(){
     this.props.logout();

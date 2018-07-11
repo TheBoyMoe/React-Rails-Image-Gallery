@@ -36,25 +36,6 @@ class GalleryForm extends React.Component {
     e.preventDefault();
     const formData = this.buildFormData();
     this.props.fileUpload(formData); // redux async action
-
-    // api.fileUploader(formData)
-    //   .then(res => {
-    //     if(res && res.status === 201) {
-    //       const id = res.data.id;
-    //       (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
-    //     } else {
-    //       console.log('Error uploading files');
-    //     }
-    //   })
-    //   .catch(err => console.log('FileUploaderError', err));
-
-    // axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
-    // .then(res => {
-    //   const id = res.data.id;
-    //   (id)? this.props.history.push(`/gallery/${id}`) : this.props.history.push('/gallery');
-    // })
-    // .catch(err => console.log(err));
-
   };
 
   buildFormData = () => {

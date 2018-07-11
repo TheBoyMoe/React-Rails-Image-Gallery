@@ -12,21 +12,6 @@ class Gallery extends React.Component {
   componentDidMount(){
     this.props.fetchGalleries();
   }
-  
-  // fetchGalleries = () => {
-  //   fetchGalleriesImages()
-  //     .then(res => {
-  //       if(res.ok && res.status === 200){
-  //         return res.json();  
-  //       }
-  //     })
-  //     .then(res => {
-  //       this.setState({
-  //         galleries: res
-  //       })
-  //     })
-  //     .catch(err => console.log('Error fetching galleries', err));
-  // }
 
   renderImageGallery = () => {
     const galleries = this.props.galleries;
