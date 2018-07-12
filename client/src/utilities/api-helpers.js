@@ -1,4 +1,5 @@
-import axiosClient from './axiosClient';
+import { isAuthenticated } from './auth-helpers';
+const axios = require('axios');
 
 export const register = (user) => {
   return fetch('http://localhost:3001/api/v1/users', {
@@ -38,16 +39,21 @@ export const signin = (data) => {
 // }
 
 export const fileUploader = (formData) => {
-  return axiosClient['post']('http://localhost:3001/api/v1/galleries', formData)
-  .then(res => res);
+  const token = isAuthenticated()['jwt'];
+  if(token) {
+    return axios.post('http://localhost:3001/api/v1/galleries', formData, { headers: { Authorization: `Bearer ${token}`}})
+      .then(res => res);
+  }
 }
 
 export const fetchGalleryImages = (id) => {
+  // const token = isAuthenticated()['jwt'];
   const options = {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      // 'Authorization': `Bearer ${token}`
     }
   }
   return fetch(`http://localhost:3001/api/v1/galleries/${id}`, options)
@@ -55,11 +61,13 @@ export const fetchGalleryImages = (id) => {
 }
 
 export const fetchGalleriesImages = () => {
+  // const token = isAuthenticated()['jwt'];
   const options = {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      // 'Authorization': `Bearer ${token}`
     }
   }
   return fetch(`http://localhost:3001/api/v1/galleries`, options)

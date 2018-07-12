@@ -2,6 +2,7 @@ module Api
   module V1
     class GalleriesController < ApplicationController
       before_action :set_gallery, only: %i(show update destroy)
+      before_action :authenticate_user, only: %i(create update destroy)
 
       # GET /galleries.json
       def index
