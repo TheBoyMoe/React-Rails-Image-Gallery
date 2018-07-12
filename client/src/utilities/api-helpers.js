@@ -2,7 +2,7 @@ import { isAuthenticated } from './auth-helpers';
 const axios = require('axios');
 
 export const register = (user) => {
-  return fetch('http://localhost:3001/api/v1/users', {
+  return fetch('/api/v1/users', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -14,7 +14,7 @@ export const register = (user) => {
 };
 
 export const signin = (data) => {
-  return fetch('http://localhost:3001/user_token', {
+  return fetch('/user_token', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -41,7 +41,7 @@ export const signin = (data) => {
 export const fileUploader = (formData) => {
   const token = isAuthenticated()['jwt'];
   if(token) {
-    return axios.post('http://localhost:3001/api/v1/galleries', formData, { headers: { Authorization: `Bearer ${token}`}})
+    return axios.post('/api/v1/galleries', formData, { headers: { Authorization: `Bearer ${token}`}})
       .then(res => res);
   }
 }
@@ -56,7 +56,7 @@ export const fetchGalleryImages = (id) => {
       // 'Authorization': `Bearer ${token}`
     }
   }
-  return fetch(`http://localhost:3001/api/v1/galleries/${id}`, options)
+  return fetch(`/api/v1/galleries/${id}`, options)
     .then(res => res);
 }
 
@@ -70,6 +70,6 @@ export const fetchGalleriesImages = () => {
       // 'Authorization': `Bearer ${token}`
     }
   }
-  return fetch(`http://localhost:3001/api/v1/galleries`, options)
+  return fetch(`/api/v1/galleries`, options)
     .then(res => res);
 }
