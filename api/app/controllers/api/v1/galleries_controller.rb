@@ -17,7 +17,8 @@ module Api
 
       # POST /galleries.json
       def create
-        @gallery = Gallery.new(gallery_params)
+        @user = User.find(current_user.id)
+        @gallery = @user.galleries.new(gallery_params)
         if @gallery.save
           render json: @gallery, status: :created, location: @gallery
         else
