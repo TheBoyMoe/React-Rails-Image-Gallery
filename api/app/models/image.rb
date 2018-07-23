@@ -10,5 +10,7 @@ class Image < ApplicationRecord
     default_url: '/images/:attachment/default_:style.jpg'
 
   validates_attachment_presence :file
+  validates_attachment_content_type :file, content_type: /\Aimage/
   validates_attachment_file_name :file, matches: [/png\Z/, /jpe?g\Z/, /gif\Z/]
+  validates_with AttachmentSizeValidator, attributes: :file, less_than: 2.megabytes
 end
