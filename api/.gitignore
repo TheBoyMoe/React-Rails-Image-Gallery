@@ -24,5 +24,7 @@
 
 # image gallery
 /public/system/*
+/spec/test_uploads
 
+# simplecov
 /coverage/*
