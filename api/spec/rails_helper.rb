@@ -4,6 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 
 require 'rspec/rails'
+require 'paperclip/matchers'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -12,6 +13,17 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
+
+  # filter any tests tagged 'slow'
+  config.filter_run_excluding slow: true
+
+  # Add support for Paperclip's Shoulda matchers
+  config.include Paperclip::Shoulda::Matchers
+
+  # Clean up file uploads when test suite is finished
+  config.after(:suite) do
+    FileUtils.rm_rf(Dir["#{Rails.root}/spec/test_uploads/"])
+  end  
 
   # cleaning strategy for RSpec tests
   config.before(:suite) do
@@ -29,9 +41,6 @@ end
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
-    with.library :active_record
-    with.library :active_model
-    with.library :action_controller
     with.library :rails
   end
 end
