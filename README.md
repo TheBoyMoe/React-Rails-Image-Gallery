@@ -17,5 +17,6 @@ This starts the React client on port 3000, and the Rails api on port 3001. Open 
 - add a user profile page displaying what galleries users have created
 - add pagination/endless scroll to the explore/home page
 - display error messages when errors occur when creating a gallery/image upload  
-- add more rails and react tests
-- wireup the search field
+- ~~implement specs on the rails back-end~~  
+- implement tests on the react front-end  
+- wireup the search field  
