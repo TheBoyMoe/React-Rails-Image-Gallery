@@ -25,8 +25,8 @@ module Api
           else
             render json: @gallery.errors, status: :unprocessable_entity
           end
-        else
-          render json: { status: 401, msg: 'Unauthorized' }
+        # else
+        #   render status: 401, json: { message: 'Unauthorized' }
         end
       end
 
@@ -34,13 +34,12 @@ module Api
       def update
         if @user && @user.id == @gallery.user.id
           if @gallery.update(gallery_params)
-            # render :show, status: :ok, location: @gallery
             render json: @gallery, status: 200
           else
             render json: @gallery.errors, status: :unprocessable_entity
           end
-        else
-          render json: { status: 401, msg: 'Unauthorized' }
+        # else
+        #   render json: { status: 401, msg: 'Unauthorized' }
         end
       end
 
@@ -48,9 +47,9 @@ module Api
       def destroy
         if @user && @user.id == @gallery.user.id
           @gallery.destroy
-          render json: { status: 204, msg: 'Item successfully deleted' }
+          render status: 204, json: { message: 'Item successfully deleted' }
         else
-          render json: { status: 401, msg: 'Unauthorized' }
+          render status: 401, json: { message: 'Unauthorized' }
         end
       end
 
