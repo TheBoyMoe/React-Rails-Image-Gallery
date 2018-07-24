@@ -42,13 +42,15 @@ RSpec.describe User, type: :model do
     end
   end
 
-  xit 'should validate the uniqueness of email' do
+  it 'should validate the uniqueness of email' do
+    skip 'no longer necessary'
     User.create(name: 'Tom', email: 'tom@ex.com', password: '12345678')
     user = User.new(name: 'Tom', email: 'TOM@ex.com', password: '12345678')
     expect(user).to_not be_valid
   end
 
-  xit 'User has many galleries' do
+  it 'User has many galleries' do
+    skip 'no longer necessary'
     user = User.create(name: 'Tom', email: 'tom@ex.com', password: '12345678')
     gallery = Gallery.create(title: 'Test Gallery', user: user)
     expect(user.galleries).to include(gallery)
