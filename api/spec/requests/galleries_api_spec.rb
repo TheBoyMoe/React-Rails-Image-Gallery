@@ -6,6 +6,8 @@ RSpec.describe 'Galleries API', type: :request do
   let!(:user) { FactoryBot.create(:user) }
   let(:gallery) { FactoryBot.create(:gallery, user: user) }
   let(:image) { fixture_file_upload("#{Rails.root}/spec/files/attachment.png", 'image/png') }
+  let(:valid_attributes) {{ title: 'New Gallery', images_attributes: [{ file: image }] }}
+  let(:invalid_attributes) {{ title: nil, images_attributes: [{ file: image }] }}
 
   describe 'fetch all galleries' do
     before do
@@ -33,36 +35,32 @@ RSpec.describe 'Galleries API', type: :request do
     it 'responds with JSON formatted output' do
       expect(response.content_type).to eq 'application/json'
     end
-  end
+  end 
 
   describe 'create a gallery' do
     context 'as an authenticated user' do
       context 'with valid attributes' do
         it 'adds a gallery' do
-          gallery_params =
-            { title: 'New Gallery',
-              images_attributes: [{
-                file: image
-              }]
-            }
           expect {
-            post api_v1_galleries_path, params: { gallery: gallery_params }, headers: auth_header(user)
+            post api_v1_galleries_path, params: { gallery: valid_attributes }, headers: auth_header(user)
             expect(response).to have_http_status(201)
           }.to change(user.galleries, :count).by(1)
         end
       end
 
-      xcontext 'with invalid attributes' do
+      context 'with invalid attributes' do
         it 'does not add a gallery' do
-
+          expect {
+            post api_v1_galleries_path, params: { gallery: invalid_attributes }, headers: auth_header(user)
+            expect(response).to have_http_status(422)
+          }.to change(user.galleries, :count).by(0)
         end
       end
     end
 
     context 'as a guest' do
       it 'returns a 401 unauthorised response' do
-        gallery_params = FactoryBot.attributes_for(:gallery)
-        post api_v1_galleries_path, params: { gallery: gallery_params }
+        post api_v1_galleries_path, params: { gallery: valid_attributes }
         expect(response).to have_http_status(401)
       end
     end
