@@ -18,7 +18,7 @@ RSpec.describe 'User authentication', type: :request do
         }
       }.to change(User, :count).by(1)
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(201)
     end
   end
 
