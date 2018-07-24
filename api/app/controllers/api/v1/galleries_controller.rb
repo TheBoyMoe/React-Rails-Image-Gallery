@@ -35,7 +35,7 @@ module Api
         if @user && @user.id == @gallery.user.id
           if @gallery.update(gallery_params)
             # render :show, status: :ok, location: @gallery
-            render json: @gallery
+            render json: @gallery, status: 200
           else
             render json: @gallery.errors, status: :unprocessable_entity
           end
@@ -48,6 +48,7 @@ module Api
       def destroy
         if @user && @user.id == @gallery.user.id
           @gallery.destroy
+          render json: { status: 204, msg: 'Item successfully deleted' }
         else
           render json: { status: 401, msg: 'Unauthorized' }
         end
